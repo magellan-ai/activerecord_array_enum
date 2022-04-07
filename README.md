@@ -1,9 +1,9 @@
-activerecord_array_enum===================
+# activerecord_array_enum
 
-Description goes here.
+Adds `array_enum` to ActiveRecord, built on the same foundations as
+the built-in `enum`.
 
-Contributing to activerecord_array_enum
-------------------------------------------
+## Contributing to activerecord_array_enum
 
 -   Check out the latest master to make sure the feature hasn't been
     implemented or the bug hasn't been fixed yet.
@@ -19,8 +19,6 @@ Contributing to activerecord_array_enum
     is fine, but please isolate to its own commit so I can cherry-pick
     around it.
 
-Copyright
----------
+## Copyright
 
-Copyright (c) 2022 Ryan Kerr. See
-LICENSE.txt for further details.
+Copyright (c) 2022 Ryan Kerr. See LICENSE.txt for further details.
