@@ -14,7 +14,7 @@ module ActiveRecordArrayEnum
     end
 
     def cast(value)
-      value.map do |element|
+      value&.map do |element|
         if mapping.key?(element)
           element.to_s
         elsif mapping.value?(element)
@@ -38,7 +38,7 @@ module ActiveRecordArrayEnum
     end
 
     def assert_valid_value(value)
-      return if value.nil?
+      return super if value.nil?
       raise ArgumentError, "Must assign an array to #{name}" unless value.respond_to?(:each)
 
       value.each do |element|
