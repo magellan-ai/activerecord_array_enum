@@ -5,7 +5,6 @@ require 'active_record/enum'
 
 require 'active_record_array_enum/array_enum_methods'
 require 'active_record_array_enum/array_enum_type'
-require 'active_record_array_enum/subset_validator'
 require 'active_record_array_enum/version'
 
 require 'active_support/hash_with_indifferent_access'
