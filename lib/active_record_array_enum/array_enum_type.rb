@@ -50,7 +50,7 @@ module ActiveRecordArrayEnum
     attr_reader :name, :mapping
 
     def serialize_elements(array)
-      array.map { |element| mapping.fetch(element, element) }
+      array&.map { |element| mapping.fetch(element, element) }
     end
   end
 end
