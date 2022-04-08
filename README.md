@@ -21,4 +21,4 @@ the built-in `enum`.
 
 ## Copyright
 
-Copyright (c) 2022 Ryan Kerr. See LICENSE.txt for further details.
+Copyright (c) 2022 Magellan AI.  See LICENSE.txt for further details.
