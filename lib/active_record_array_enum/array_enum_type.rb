@@ -38,6 +38,7 @@ module ActiveRecordArrayEnum
     end
 
     def assert_valid_value(value)
+      return if value.nil?
       raise ArgumentError, "Must assign an array to #{name}" unless value.respond_to?(:each)
 
       value.each do |element|
