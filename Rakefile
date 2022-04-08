@@ -13,16 +13,18 @@ end
 
 require 'rake'
 require 'juwelier'
+require_relative 'lib/active_record_array_enum/version'
 
 Juwelier::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
   gem.name                  = "activerecord_array_enum"
-  gem.homepage              = "http://github.com/leboshi/activerecord_array_enum"
+  gem.version               = ActiveRecordArrayEnum::VERSION::STRING
+  gem.homepage              = "https://github.com/magellan-ai/activerecord_array_enum"
   gem.license               = "MIT"
-  gem.summary               = %(TODO: one-line summary of your gem)
-  gem.description           = %(TODO: longer description of your gem)
-  gem.email                 = "leboshi@gmail.com"
-  gem.authors               = ["Ryan Kerr"]
+  gem.summary               = "Adds array functionality built on ActiveRecord's enums."
+  gem.description           = "Adds array functionality built on ActiveRecord's enums."
+  gem.email                 = "ryan@magellan.ai"
+  gem.authors               = ["Ryan Kerr", "Gregory Nelson", "William Dana", "Rex Madden"]
   gem.required_ruby_version = '>= 2.7'
 
   # dependencies defined in Gemfile
@@ -47,7 +49,7 @@ task default: :spec
 require 'rdoc/task'
 
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+  version = ActiveRecordArrayEnum::VERSION::STRING
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = "activerecord_array_enum #{version}"
