@@ -8,7 +8,7 @@ module ActiveRecordArrayEnum
   module VERSION
     MAJOR = 0
     MINOR = 0
-    TINY  = 1
+    TINY  = 2
     PRE   = "0"
 
     STRING = [MAJOR, MINOR, TINY, PRE].compact.join(".")

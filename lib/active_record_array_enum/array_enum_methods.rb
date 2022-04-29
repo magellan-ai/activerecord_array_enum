@@ -11,10 +11,17 @@ module ActiveRecordArrayEnum
     attr_reader :klass
 
     def define_enum_methods(name, value_method_name, value, scopes)
-      # TODO: Should we implement this?
       # def active?() status_for_database.include?(0) end
-      # klass.send(:detect_enum_conflict!, name, "#{value_method_name}?")
-      # define_method("#{value_method_name}?") { public_send(:"#{name}_for_database").include?(value) }
+      klass.send(:detect_enum_conflict!, name, "#{value_method_name}?")
+      define_method("#{value_method_name}?") { public_send(:"#{name}_for_database").include?(value) }
+
+      # def active!() update!(status: status_for_database | [0]) end
+      klass.send(:detect_enum_conflict!, name, "#{value_method_name}!")
+      define_method("#{value_method_name}!") { update!(name => public_send(:"#{name}_for_database") | [value]) }
+
+      # def not_active!() update!(status: status_for_database - [0]) end
+      klass.send(:detect_enum_conflict!, name, "not_#{value_method_name}!")
+      define_method("not_#{value_method_name}!") { update!(name => public_send(:"#{name}_for_database") - [value]) }
 
       return unless scopes
 
