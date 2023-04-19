@@ -4,9 +4,18 @@ inherit_mode:
 
 require: rubocop-rails
 
+AllCops:
+  Exclude:
+    - 'db/*schema.rb'
+    - 'lib/scratch/*.rb'
+  TargetRubyVersion: 3.2
+
 #################### Gemspec ###########################
 
-Gemspec/DateAssignment:
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: true
+
+Gemspec/DevelopmentDependencies:
   Enabled: true
 
 Gemspec/RequireMFA:
@@ -44,6 +53,12 @@ Layout/HashAlignment:
 Layout/HeredocArgumentClosingParenthesis:
   Enabled: true
 
+Layout/LineContinuationLeadingSpace:
+  Enabled: true
+
+Layout/LineContinuationSpacing:
+  Enabled: true
+
 Layout/LineEndStringConcatenationIndentation:
   Enabled: true
 
@@ -68,7 +83,7 @@ Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 
 Layout/SpaceBeforeBrackets:
-  Enabled: false
+  Enabled: true
 
 #################### Lint ##################################
 ### Warnings
@@ -91,6 +106,9 @@ Lint/BinaryOperatorWithIdenticalOperands:
 Lint/ConstantDefinitionInBlock:
   Enabled: false
 
+Lint/ConstantOverwrittenInRescue:
+  Enabled: true
+
 Lint/DeprecatedConstants:
   Enabled: true
 
@@ -101,6 +119,12 @@ Lint/DuplicateBranch:
   Enabled: true
 
 Lint/DuplicateElsifCondition:
+  Enabled: true
+
+Lint/DuplicateMagicComment:
+  Enabled: true
+
+Lint/DuplicateMatchPattern:
   Enabled: true
 
 Lint/DuplicateRegexpCharacterClassElement:
@@ -154,6 +178,9 @@ Lint/MixedRegexpCaptureTypes:
 Lint/NoReturnInBeginEndBlocks:
   Enabled: true
 
+Lint/NonAtomicFileOperation:
+  Enabled: true
+
 Lint/NumberedParameterAssignment:
   Enabled: true
 
@@ -167,6 +194,12 @@ Lint/RaiseException:
   Enabled: true
 
 Lint/RedundantDirGlobSort:
+  Enabled: true
+
+Lint/RefinementImportMethods:
+  Enabled: true
+
+Lint/RequireRangeParentheses:
   Enabled: true
 
 Lint/RequireRelativeSelfPath:
@@ -188,13 +221,13 @@ Lint/SymbolConversion:
 Lint/ToEnumArguments:
   Enabled: true
 
+Lint/TripleQuotes:
+  Enabled: true
+
 Lint/TopLevelReturnWithArgument:
   Enabled: true
 
 Lint/TrailingCommaInAttributeDeclaration:
-  Enabled: true
-
-Lint/TripleQuotes:
   Enabled: true
 
 Lint/UnexpectedBlockArity:
@@ -206,10 +239,13 @@ Lint/UnmodifiedReduceAccumulator:
 Lint/UnreachableLoop:
   Enabled: true
 
-Lint/UselessRuby2Keywords:
+Lint/UselessMethodDefinition:
   Enabled: true
 
-Lint/UselessMethodDefinition:
+Lint/UselessRescue:
+  Enabled: true
+
+Lint/UselessRuby2Keywords:
   Enabled: true
 
 Lint/UselessTimes:
@@ -226,7 +262,7 @@ Metrics/BlockLength:
   CountComments: false  # count full line comments?
   Max: 25
   CountAsOne: []
-  IgnoredMethods:
+  AllowedMethods:
     # By default, exclude the `#refine` method, as it tends to have larger
     # associated blocks.
     - refine
@@ -244,13 +280,16 @@ Metrics/ClassLength:
   CountComments: false  # count full line comments?
   Max: 100
 
+Metrics/CollectionLiteralLength:
+  Enabled: true
+
 # Avoid complex methods.
 Metrics/CyclomaticComplexity:
   Description: >-
-                 A complexity metric that is strongly correlated to the number
-                 of test cases needed to validate a method.
+    A complexity metric that is strongly correlated to the number
+    of test cases needed to validate a method.
   Enabled: false
-  IgnoredMethods: []
+  AllowedMethods: []
   Max: 7
 
 Metrics/MethodLength:
@@ -273,32 +312,16 @@ Metrics/ParameterLists:
 
 Metrics/PerceivedComplexity:
   Description: >-
-                 A complexity metric geared towards measuring complexity for a
-                 human reader.
+    A complexity metric geared towards measuring complexity for a
+    human reader.
   Enabled: true
-  IgnoredMethods: []
+  AllowedMethods: []
   Max: 8
 
 #################### Naming ##############################
 
 Naming/BlockForwarding:
   Enabled: true
-
-Naming/InclusiveLanguage:
-  Enabled: true
-
-Naming/MethodParameterName:
-  Enabled: true
-  AllowedNames:
-    - ad
-    - as
-    - by
-    - e
-    - i
-    - id
-    - io
-    - of
-    - to
 
 Naming/VariableNumber:
   Enabled: true
@@ -310,14 +333,14 @@ Naming/VariableNumber:
     - rfc822
     - rfc2822
     - rfc3339
-    - s3
-    - switched_to_v1
-    - switched_to_v2
     - !ruby/regexp /\bmd5\b/
     - !ruby/regexp /\bs3\b/
     - !ruby/regexp /\bv\d+\b/
 
-#################### Security #############################
+#################### Security ############################
+
+Security/CompoundHash:
+  Enabled: true
 
 Security/IoMethods:
   Enabled: true
@@ -338,6 +361,9 @@ Style/ArgumentsForwarding: # (new in 1.1)
 
 Style/ArrayCoercion:
   Enabled: true
+
+Style/ArrayIntersect:
+  Enabled: false
 
 # e.g. File.open { ... } which auto-closes instead of just f = File.open
 Style/AutoResourceCleanup:
@@ -365,6 +391,18 @@ Style/CollectionMethods:
 Style/CombinableLoops:
   Enabled: true
 
+Style/ComparableClamp:
+  Enabled: true
+
+Style/ConcatArrayLiterals:
+  Enabled: true
+
+Style/DataInheritance:
+  Enabled: true
+
+Style/DirEmpty:
+  Enabled: true
+
 Style/DisableCopsWithinSourceCodeDirective:
   Enabled: false
 
@@ -374,6 +412,9 @@ Style/Documentation:
 Style/DocumentDynamicEvalDefinition:
   Enabled: true
 
+Style/EmptyHeredoc:
+  Enabled: true
+
 Style/EmptyMethod:
   Enabled: true
   EnforcedStyle: compact
@@ -381,10 +422,19 @@ Style/EmptyMethod:
 Style/EndlessMethod:
   Enabled: true
 
+Style/EnvHome:
+  Enabled: true
+
 Style/ExplicitBlockArgument:
   Enabled: true
 
 Style/ExponentialNotation:
+  Enabled: true
+
+Style/FetchEnvVar:
+  Enabled: true
+
+Style/FileEmpty:
   Enabled: true
 
 Style/FileRead:
@@ -435,7 +485,10 @@ Style/InPatternThen:
   Enabled: true
 
 Style/IpAddresses:
-  Enabled: false
+  Enabled: true
+  AllowedAddresses:
+    - "::"
+    # :: is a valid IPv6 address, but could potentially be legitimately in code
 
 Style/KeywordParametersOrder:
   Enabled: true
@@ -443,16 +496,27 @@ Style/KeywordParametersOrder:
 Style/LambdaCall:
   Enabled: false
 
+Style/MagicCommentFormat:
+  Enabled: true
+
+Style/MapCompactWithConditionalBlock:
+  Enabled: true
+
 Style/MapToHash:
+  Enabled: true
+
+Style/MapToSet:
   Enabled: true
 
 # TODO: Divided on this one.  Disabled until we reach a majority, if not a consensus.
 Style/MethodCalledOnDoEndBlock:
   Enabled: false
 
-Style/MissingElse:
+Style/MinMaxComparison:
   Enabled: true
-  EnforcedStyle: case
+
+Style/MissingElse:
+  Enabled: false
 
 Style/ModuleFunction:
   Enabled: false
@@ -480,8 +544,14 @@ Style/NumberedParameters:
 Style/NumberedParametersLimit:
   Enabled: true
 
+Style/ObjectThen:
+  Enabled: true
+
 Style/OpenStructUse:
-  Enabled: false
+  Enabled: true
+
+Style/OperatorMethodCall:
+  Enabled: true
 
 Style/OptionHash:
   Enabled: true
@@ -490,7 +560,7 @@ Style/OptionalBooleanParameter:
   Enabled: true
 
 Style/QuotedSymbols:
-  Enabled: false
+  Enabled: true
 
 Style/RedundantArgument:
   Enabled: true
@@ -498,10 +568,28 @@ Style/RedundantArgument:
 Style/RedundantAssignment:
   Enabled: true
 
+Style/RedundantConstantBase:
+  Enabled: true
+
+Style/RedundantDoubleSplatHashBraces:
+  Enabled: true
+
+Style/RedundantEach:
+  Enabled: true
+
 Style/RedundantFetchBlock:
   Enabled: true
 
 Style/RedundantFileExtensionInRequire:
+  Enabled: true
+
+Style/RedundantHeredocDelimiterQuotes:
+  Enabled: true
+
+Style/RedundantInitialize:
+  Enabled: true
+
+Style/RedundantLineContinuation:
   Enabled: true
 
 Style/RedundantRegexpCharacterClass:
@@ -519,6 +607,9 @@ Style/RedundantSelfAssignmentBranch:
 Style/RescueStandardError:
   Enabled: true
   EnforcedStyle: implicit
+
+Style/RedundantStringEscape:
+  Enabled: true
 
 Style/ReturnNil:
   Enabled: true
@@ -572,8 +663,13 @@ Rails:
   Exclude:
     - 'lib/scratch/*'
 
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: true
 
 Rails/ActionControllerTestCase:
+  Enabled: true
+
+Rails/ActionOrder:
   Enabled: true
 
 Rails/ActiveRecordCallbacksOrder:
@@ -583,6 +679,9 @@ Rails/ActiveRecordOverride:
   Enabled: false
 
 Rails/ActiveSupportAliases:
+  Enabled: true
+
+Rails/ActiveSupportOnLoad:
   Enabled: true
 
 Rails/AddColumnIndex:
@@ -616,6 +715,9 @@ Rails/Delegate:
 Rails/DeprecatedActiveModelErrorsMethods:
   Enabled: true
 
+Rails/DotSeparatedKeys:
+  Enabled: true
+
 Rails/DuplicateAssociation:
   Enabled: true
 
@@ -645,6 +747,9 @@ Rails/FindBy:
 Rails/FindById:
   Enabled: true
 
+Rails/FreezeTime:
+  Enabled: true
+
 # Meh.  Just means more models, sometimes
 Rails/HasAndBelongsToMany:
   Enabled: false
@@ -662,6 +767,9 @@ Rails/I18nLocaleAssignment:
   Enabled: true
 
 Rails/I18nLocaleTexts:
+  Enabled: true
+
+Rails/IgnoredColumnsAssignment:
   Enabled: true
 
 Rails/Inquiry:
@@ -720,7 +828,16 @@ Rails/RenderInline:
 Rails/RenderPlainText:
   Enabled: true
 
+Rails/ResponseParsedBody:
+  Enabled: true
+
 Rails/RootJoinChain:
+  Enabled: true
+
+Rails/RootPathnameMethods:
+  Enabled: true
+
+Rails/RootPublicPath:
   Enabled: true
 
 Rails/SaveBang:
@@ -760,7 +877,22 @@ Rails/SkipsModelValidations:
 Rails/SquishedSQLHeredocs:
   Enabled: true
 
+Rails/StripHeredoc:
+  Enabled: true
+
+Rails/ThreeStateBooleanColumn:
+  Enabled: true
+
 Rails/TimeZoneAssignment:
+  Enabled: true
+
+Rails/ToFormattedS:
+  Enabled: true
+
+Rails/ToSWithArgument:
+  Enabled: true
+
+Rails/TopLevelHashWithIndifferentAccess:
   Enabled: true
 
 Rails/TransactionExitStatement:
@@ -775,7 +907,13 @@ Rails/WhereEquals:
 Rails/WhereExists:
   Enabled: true
 
+Rails/WhereMissing:
+  Enabled: true
+
 Rails/WhereNot:
+  Enabled: true
+
+Rails/WhereNotWithMultipleConditions:
   Enabled: true
 
 # Accept `redirect_to(...) and return` and similar cases.

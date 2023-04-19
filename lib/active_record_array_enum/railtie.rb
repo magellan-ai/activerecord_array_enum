@@ -5,7 +5,9 @@ module ActiveRecordArrayEnum
 
   class Railtie < Rails::Railtie
     initializer 'active_record.array_enum.load' do
-      ActiveRecord::Base.extend ActiveRecordArrayEnum
+      ActiveSupport.on_load(:active_record) do
+        ActiveRecord::Base.extend ActiveRecordArrayEnum
+      end
     end
   end
 end

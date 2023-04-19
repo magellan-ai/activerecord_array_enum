@@ -33,8 +33,8 @@ module ActiveRecordArrayEnum
       subtype.serialize(serialize_elements(value))
     end
 
-    def serializable?(value, &block)
-      subtype.serializable?(serialize_elements(value), &block)
+    def serializable?(value, &)
+      subtype.serializable?(serialize_elements(value), &)
     end
 
     def assert_valid_value(value)

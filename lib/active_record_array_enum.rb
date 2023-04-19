@@ -38,6 +38,7 @@ module ActiveRecordArrayEnum
 
   private
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def _array_enum(name, values, prefix: nil, suffix: nil, scopes: true, **options)
     assert_valid_array_enum_definition_values(values)
     # statuses = { }
@@ -61,12 +62,12 @@ module ActiveRecordArrayEnum
     _array_enum_methods_module.module_eval do
       prefix =
         if prefix
-          prefix == true ? "#{name}_" : "#{prefix}_"
+          (prefix == true) ? "#{name}_" : "#{prefix}_"
         end
 
       suffix =
         if suffix
-          suffix == true ? "_#{name}" : "_#{suffix}"
+          (suffix == true) ? "_#{name}" : "_#{suffix}"
         end
 
       pairs = values.respond_to?(:each_pair) ? values.each_pair : values.each_with_index
@@ -100,6 +101,7 @@ module ActiveRecordArrayEnum
 
     raise ArgumentError, "Array enum label name must not be blank." if (values.is_a?(Hash) && values.keys.any?(&:blank?)) || (values.is_a?(Array) && values.any?(&:blank?))
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 end
 
 require 'active_record_array_enum/railtie' if defined?(Rails::Railtie)
