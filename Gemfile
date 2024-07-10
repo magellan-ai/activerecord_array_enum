@@ -10,7 +10,7 @@ group :development do
   gem 'appraisal'
   gem 'bundler', '>= 1.0'
   gem 'juwelier', '~> 2.4'
-  gem 'rdoc', '~> 6.3', '>= 6.3.1'
+  gem 'rdoc', '~> 6.5', '>= 6.5.1.1'
   gem 'rspec', '~> 3.12'
   gem 'rubocop-rails', '>= 2.20.0'
   gem 'simplecov'
