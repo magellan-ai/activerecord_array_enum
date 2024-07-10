@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'activerecord', '>= 7.0.4.3'
+gem 'activerecord', '>= 7.0.7.1'
 
 group :development do
   gem 'appraisal'
