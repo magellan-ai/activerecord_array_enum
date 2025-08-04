@@ -21,26 +21,38 @@ module ActiveRecordArrayEnum
   end
 
   def array_enum(name = nil, values = nil, **options)
+    raise ArgumentError, "name is required for array_enum" if name.blank? && ::ActiveRecord::version >= Gem::Version.new('7.2')
+
     if name
       unless values
         values  = options
         options = {}
+
       end
+
       return _array_enum(name, values, **options)
     end
 
-    definitions     = options.slice!(:_prefix, :_suffix, :_scopes, :_default)
-    options.transform_keys! { |key| :"#{key[1..]}" }
-    options[:array] = true
+    # support rails 7.1
+    if ::ActiveRecord::version < Gem::Version.new('7.2')
+      definitions     = options.slice!(:_prefix, :_suffix, :_scopes, :_default)
+      options.transform_keys! { |key| :"#{key[1..]}" }
+    end
 
+    options[:array] = true
     definitions.each { |k, v| _array_enum(k, v, **options) }
   end
 
   private
 
   # rubocop:disable Metrics/PerceivedComplexity
-  def _array_enum(name, values, prefix: nil, suffix: nil, scopes: true, **options)
+  def _array_enum(name, values, prefix: nil, suffix: nil, scopes: true, instance_methods: true, validate: false, **options)
     assert_valid_array_enum_definition_values(values)
+
+    if ::ActiveRecord::version >= Gem::Version.new('7.2')
+      assert_valid_enum_options(options)
+    end
+
     # statuses = { }
     enum_values = ActiveSupport::HashWithIndifferentAccess.new
     name        = name.to_s
@@ -56,6 +68,14 @@ module ActiveRecordArrayEnum
     attribute(name, **options) do |subtype|
       subtype = subtype.subtype if subtype.is_a?(ArrayEnumType)
       ArrayEnumType.new(name, enum_values, subtype)
+    end
+
+
+    if ::ActiveRecord::version >= Gem::Version.new('7.2')
+      decorate_attributes([name]) do |_name, subtype|
+        subtype = subtype.subtype if subtype.is_a?(ArrayEnumType)
+        ArrayEnumType.new(name, enum_values, subtype)
+      end
     end
 
     value_method_names = []
@@ -77,18 +97,25 @@ module ActiveRecordArrayEnum
 
         value_method_name = "#{prefix}#{label}#{suffix}"
         value_method_names << value_method_name
-        define_enum_methods(name, value_method_name, value, scopes)
+        define_enum_methods(name, value_method_name, value, scopes, instance_methods)
 
         method_friendly_label = label.gsub(/[\W&&[:ascii:]]+/, "_")
         value_method_alias    = "#{prefix}#{method_friendly_label}#{suffix}"
 
         if value_method_alias != value_method_name && value_method_names.exclude?(value_method_alias)
           value_method_names << value_method_alias
-          define_enum_methods(name, value_method_alias, value, scopes)
+          define_enum_methods(name, value_method_alias, value, scopes, instance_methods)
         end
       end
     end
+
     detect_negative_enum_conditions!(value_method_names) if scopes
+
+    if validate
+      validate = {} unless Hash === validate
+      validates_inclusion_of name, in: enum_values.keys, **validate
+    end
+
     enum_values.freeze
   end
 
