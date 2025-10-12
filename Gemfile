@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'activerecord', '>= 7.0.7.1'
+gem 'activerecord', '>= 8.0.2.1'
 
 group :development do
   gem 'appraisal'
@@ -12,6 +12,6 @@ group :development do
   gem 'juwelier', '~> 2.4'
   gem 'rdoc', '~> 6.5', '>= 6.5.1.1'
   gem 'rspec', '~> 3.12'
-  gem 'rubocop-rails', '>= 2.25.1'
+  gem 'rubocop-rails', '>= 2.33.0'
   gem 'simplecov'
 end
